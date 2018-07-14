@@ -8,9 +8,14 @@
 	font-weight: bold;
 }
 
-@media (min-width: 500px) and (min-height: 400px) {
+@media (min-width: 430px) and (min-height: 400px) {
 	.Burger {
 		width: 450px;
+		height: 400px;
+	}
+}
+@media (min-width: 350px) and (min-height: 400px) {
+	.Burger {
 		height: 400px;
 	}
 }
