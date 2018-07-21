@@ -72,7 +72,6 @@ class BurgerBuilder extends Component {
 			.reduce((preValue, newValue) => {
 				return preValue + newValue;
 			}, 0);
-		console.log(sum);
 		this.setState({
 			purchasable: sum > 0
 		});
