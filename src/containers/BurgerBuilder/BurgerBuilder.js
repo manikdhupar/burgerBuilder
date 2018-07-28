@@ -5,6 +5,7 @@ import Modals from '../../components/UI/Modals/Modals';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 const INGREDIENT_PRICES = {
 	salad: 0.5,
@@ -45,6 +46,7 @@ class BurgerBuilder extends Component {
 		});
 		this.updatePurchaseState(updatedIngredients);
 	};
+
 	removeIngredientHandler = (type) => {
 		// onClick handler for adding ingredients
 		const oldValue = this.state.ingredients[type];
@@ -97,7 +99,6 @@ class BurgerBuilder extends Component {
 				email: 'manik.dhupar7@gmail.com'
 			}
 		};
-
 		axios
 			.post('/orders.json', order)
 			.then((response) => this.setState({ loading: false, purchasing: false }))
@@ -112,7 +113,6 @@ class BurgerBuilder extends Component {
 		for (let key in disabledInfo) {
 			disabledInfo[key] = disabledInfo[key] <= 0;
 		}
-
 		let orderSummary = (
 			<OrderSummary
 				ingridients={this.state.ingredients}
@@ -145,4 +145,5 @@ class BurgerBuilder extends Component {
 	}
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, axios);
+// export default BurgerBuilder;

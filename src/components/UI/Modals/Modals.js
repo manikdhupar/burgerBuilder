@@ -10,7 +10,7 @@ class Modals extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Backdrop clicked={this.props.modalClosed} show={this.props.show} />
+				<Backdrop clicked={this.props.clicked} show={this.props.show} />
 				<div
 					style={{
 						transform: this.props.show ? 'translateX(0)' : 'translateX(-100vh)',
