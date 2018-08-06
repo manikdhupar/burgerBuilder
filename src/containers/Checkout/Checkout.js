@@ -10,17 +10,26 @@ class Checkout extends Component {
 			cheese: 1
 		}
 	};
+
+	checkoutCancelled = () => {
+		this.props.history.goBack();
+	};
+
+	checkoutContinued = () => {
+		this.props.history.push('/checkout/contact-data');
+	};
+
 	render() {
 		return (
 			<div>
-				<CheckoutSummary ingridients={this.state.ingridients} />
+				<CheckoutSummary
+					checkoutCancelled={this.checkoutCancelled}
+					checkoutContinued={this.checkoutContinued}
+					ingridients={this.state.ingridients}
+				/>
 			</div>
 		);
 	}
 }
 
 export default Checkout;
-
-// 1) essay
-// 2) application to the principal requesting a job as high scool teacher
-// 3)application for 1 week lap to sse mechanical departmet.
