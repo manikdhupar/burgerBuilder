@@ -5,12 +5,8 @@ import { Route } from 'react-router-dom';
 
 class Checkout extends Component {
 	state = {
-		ingridients: {
-			salad: 1,
-			meat: 1,
-			bacon: 1,
-			cheese: 1
-		}
+		ingridients: null,
+		totalPrice: 0
 	};
 
 	checkoutCancelled = () => {
@@ -26,11 +22,16 @@ class Checkout extends Component {
 		console.log(query);
 		console.log(query.entries());
 		const ingredients = {};
+		let price = 0;
 		for (let param of query.entries()) {
-			ingredients[param[0]] = +param[1];
+			if (param[0] === 'price') {
+				price = +param[1];
+			} else {
+				ingredients[param[0]] = +param[1];
+			}
 		}
 
-		this.setState({ ingredients: ingredients });
+		this.setState({ ingridients: ingredients, totalPrice: price });
 	};
 
 	render() {
@@ -41,7 +42,12 @@ class Checkout extends Component {
 					checkoutContinued={this.checkoutContinued}
 					ingridients={this.state.ingridients}
 				/>
-				<Route path={this.props.match.path + '/contact-data'} component={ContactData} />
+				<Route
+					path={this.props.match.path + '/contact-data'}
+					render={(props) => (
+						<ContactData {...props} ingredients={this.state.ingridients} price={this.state.totalPrice} />
+					)}
+				/>
 			</div>
 		);
 	}
