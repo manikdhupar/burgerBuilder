@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import classes from './Order.css';
 const orders = (props) => {
 	return (
@@ -8,5 +8,4 @@ const orders = (props) => {
 		</div>
 	);
 };
-
 export default orders;
