@@ -18,7 +18,8 @@ class ContactData extends Component {
 				validation: {
 					required: true
 				},
-				valid: true
+				valid: false,
+				touched: false
 			},
 			street: {
 				elementType: 'input',
@@ -30,7 +31,8 @@ class ContactData extends Component {
 				validation: {
 					required: true
 				},
-				valid: true
+				valid: false,
+				touched: false
 			},
 			zipCode: {
 				elementType: 'input',
@@ -43,7 +45,8 @@ class ContactData extends Component {
 					required: true,
 					minLength: 5
 				},
-				valid: true
+				valid: false,
+				touched: false
 			},
 			country: {
 				elementType: 'input',
@@ -55,7 +58,8 @@ class ContactData extends Component {
 				validation: {
 					required: true
 				},
-				valid: true
+				valid: false,
+				touched: false
 			},
 			deliveryMethod: {
 				elementType: 'select',
@@ -67,7 +71,8 @@ class ContactData extends Component {
 				},
 				value: 'fastest',
 				validation: {},
-				valid: true
+				valid: false,
+				touched: false
 			},
 			email: {
 				elementType: 'input',
@@ -79,9 +84,11 @@ class ContactData extends Component {
 				validation: {
 					required: true
 				},
-				valid: true
+				valid: false,
+				touched: false
 			}
 		},
+		formIsValid: false,
 		loading: false
 	};
 
@@ -116,9 +123,15 @@ class ContactData extends Component {
 
 		updatedFormElement.value = event.target.value;
 		updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+		updatedFormElement.touched = true;
 		updatedOrderedForm[inputIdentifier] = updatedFormElement;
+		let formIsValid = true;
+		for (let inputIdentifier in updatedOrderedForm) {
+			formIsValid = updatedOrderedForm[inputIdentifier].valid && formIsValid;
+		}
 		this.setState({
-			orderForm: updatedOrderedForm
+			orderForm: updatedOrderedForm,
+			formIsValid: formIsValid
 		});
 	};
 
@@ -147,6 +160,9 @@ class ContactData extends Component {
 				{formElementArray.map((formElement) => {
 					return (
 						<Input
+							invalid={!formElement.config.valid}
+							touched={formElement.config.touched}
+							shouldValidate={formElement.config.validation}
 							key={formElement.id}
 							elementType={formElement.config.elementType}
 							elementConfig={formElement.config.elementConfig}
@@ -155,7 +171,9 @@ class ContactData extends Component {
 						/>
 					);
 				})}
-				<Buttons btnType="Success">Order</Buttons>
+				<Buttons btnType="Success" disabled={!this.state.formIsValid}>
+					Order
+				</Buttons>
 			</form>
 		);
 

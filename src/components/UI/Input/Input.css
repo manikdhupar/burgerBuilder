@@ -4,6 +4,11 @@
 	box-sizing: border-box;
 }
 
+.Invalid {
+	border: 1px solid red;
+	background-color: salmon;
+}
+
 .Label {
 	font-weight: bold;
 	display: block;
