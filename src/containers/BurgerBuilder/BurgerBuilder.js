@@ -6,6 +6,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import connect from 'react-redux';
 
 const INGREDIENT_PRICES = {
 	salad: 0.5,
@@ -85,8 +86,6 @@ class BurgerBuilder extends Component {
 		this.setState({ purchasing: false });
 	};
 	purchaseContinueHandler = () => {
-		// alert('Continue ahead');
-
 		var queryParams = [];
 		for (let i in this.state.ingredients) {
 			queryParams.push(encodeURIComponent(i) + '=' + this.state.ingredients[i]);
@@ -101,16 +100,16 @@ class BurgerBuilder extends Component {
 	};
 
 	componentDidMount() {
-		axios
-			.get('https://burgerbuilder-react-285da.firebaseio.com/ingredients.json')
-			.then((res) => {
-				this.setState({
-					ingredients: res.data
-				});
-			})
-			.catch((error) => {
-				this.setState({ error: true });
-			});
+		// axios
+		// 	.get('https://burgerbuilder-react-285da.firebaseio.com/ingredients.json')
+		// 	.then((res) => {
+		// 		this.setState({
+		// 			ingredients: res.data
+		// 		});
+		// 	})
+		// 	.catch((error) => {
+		// 		this.setState({ error: true });
+		// 	});
 	}
 
 	render() {
