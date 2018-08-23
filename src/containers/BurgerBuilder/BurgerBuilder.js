@@ -18,10 +18,7 @@ const INGREDIENT_PRICES = {
 
 class BurgerBuilder extends Component {
 	state = {
-		totalPrice: 0,
-		purchasing: false,
-		loading: false,
-		error: null
+		purchasing: false
 	};
 
 	updatePurchaseState = (ingredients) => {
@@ -46,19 +43,6 @@ class BurgerBuilder extends Component {
 		this.props.history.push('/checkout');
 	};
 
-	componentDidMount() {
-		// axios
-		// 	.get('https://burgerbuilder-react-285da.firebaseio.com/ingredients.json')
-		// 	.then((res) => {
-		// 		this.setState({
-		// 			ingredients: res.data
-		// 		});
-		// 	})
-		// 	.catch((error) => {
-		// 		this.setState({ error: true });
-		// 	});
-	}
-
 	render() {
 		let burger = this.state.error ? <p>Ingredients can't be shown</p> : <Spinner />;
 
@@ -69,7 +53,6 @@ class BurgerBuilder extends Component {
 		for (let key in disabledInfo) {
 			disabledInfo[key] = disabledInfo[key] <= 0;
 		}
-
 		let orderSummary = null;
 
 		if (this.props.ing) {
@@ -95,10 +78,6 @@ class BurgerBuilder extends Component {
 					price={this.props.price}
 				/>
 			);
-		}
-
-		if (this.state.loading) {
-			orderSummary = <Spinner />;
 		}
 
 		return (
