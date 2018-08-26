@@ -14,6 +14,8 @@ class Checkout extends Component {
 	};
 
 	render() {
+		console.log(this.props.match);
+		console.log(this.props.history);
 		return (
 			<div>
 				<CheckoutSummary

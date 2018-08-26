@@ -49,7 +49,6 @@ class BurgerBuilder extends Component {
 
 	render() {
 		let burger = this.props.error ? <p>Ingredients can't be shown</p> : <Spinner />;
-
 		const disabledInfo = {
 			...this.props.ing
 		};
