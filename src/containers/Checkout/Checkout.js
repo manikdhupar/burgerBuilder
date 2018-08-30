@@ -10,14 +10,16 @@ class Checkout extends Component {
 	};
 
 	checkoutContinued = () => {
-		this.props.history.push('/checkout/contact-data');
+		this.props.history.replace('/checkout/contact-data');
 	};
 
 	render() {
 		let summary = <Redirect to="/" />;
 		if (this.props.ings) {
+			const purchased = this.props.purchased ? <Redirect to="/" /> : null;
 			summary = (
 				<div>
+					{purchased}
 					<CheckoutSummary
 						checkoutCancelled={this.checkoutCancelled}
 						checkoutContinued={this.checkoutContinued}
@@ -33,7 +35,8 @@ class Checkout extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		ings: state.burgerBuilder.ingredients
+		ings: state.burgerBuilder.ingredients,
+		purchased: state.order.purchased
 	};
 };
 
