@@ -45,10 +45,25 @@ export const auth = (email, password, isSignUp) => {
 			.post(url, authData)
 			.then(response => {
 				console.log(response.data);
+				dispatch(authLogout(response.data.expiresIn));
 				dispatch(authSuccess(response.data.idToken, response.data.localId));
 			})
 			.catch(error => {
 				dispatch(authFail(error.response.data.error));
 			});
+	};
+};
+
+export const authLogout = expirationTime => {
+	return dispatch => {
+		setTimeout(() => {
+			dispatch(logout());
+		}, expirationTime * 1000);
+	};
+};
+
+export const logout = () => {
+	return {
+		type: actionTypes.AUTH_LOGOUT
 	};
 };
