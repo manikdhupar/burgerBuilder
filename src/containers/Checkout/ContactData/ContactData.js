@@ -95,7 +95,7 @@ class ContactData extends Component {
 		loading: false
 	};
 
-	clickedHandler = (event) => {
+	clickedHandler = event => {
 		event.preventDefault();
 		const formData = {};
 		for (let formDataElement in this.state.orderForm) {
@@ -106,7 +106,7 @@ class ContactData extends Component {
 			price: this.props.totalPrice,
 			orderData: formData
 		};
-		this.props.onOrderBurger(order);
+		this.props.onOrderBurger(order, this.props.token);
 	};
 
 	inputChangedHandler = (event, inputIdentifier) => {
@@ -118,7 +118,10 @@ class ContactData extends Component {
 		};
 
 		updatedFormElement.value = event.target.value;
-		updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+		updatedFormElement.valid = this.checkValidity(
+			updatedFormElement.value,
+			updatedFormElement.validation
+		);
 		updatedFormElement.touched = true;
 		updatedOrderedForm[inputIdentifier] = updatedFormElement;
 		let formIsValid = true;
@@ -153,7 +156,7 @@ class ContactData extends Component {
 
 		let form = (
 			<form onSubmit={this.clickedHandler}>
-				{formElementArray.map((formElement) => {
+				{formElementArray.map(formElement => {
 					return (
 						<Input
 							invalid={!formElement.config.valid}
@@ -163,7 +166,7 @@ class ContactData extends Component {
 							elementType={formElement.config.elementType}
 							elementConfig={formElement.config.elementConfig}
 							value={formElement.config.value}
-							changed={(event) => this.inputChangedHandler(event, formElement.id)}
+							changed={event => this.inputChangedHandler(event, formElement.id)}
 						/>
 					);
 				})}
@@ -186,18 +189,23 @@ class ContactData extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
 	return {
 		ings: state.burgerBuilder.ingredients,
 		totalPrice: state.burgerBuilder.totalPrice,
-		loading: state.order.loading
+		loading: state.order.loading,
+		token: state.auth.token
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
 	return {
-		onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+		onOrderBurger: (orderData, token) =>
+			dispatch(actions.purchaseBurger(orderData, token))
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withErrorHandler(ContactData, axios));
