@@ -17,7 +17,7 @@ export const authSuccess = (idToken, userId) => {
 	};
 };
 
-export const authFail = (error) => {
+export const authFail = error => {
 	return {
 		type: actionTypes.AUTH_FAIL,
 		error: error
@@ -25,7 +25,7 @@ export const authFail = (error) => {
 };
 
 export const auth = (email, password, isSignUp) => {
-	return (dispatch) => {
+	return dispatch => {
 		dispatch(authStart());
 		const authData = {
 			email: email,
@@ -43,13 +43,12 @@ export const auth = (email, password, isSignUp) => {
 
 		axios
 			.post(url, authData)
-			.then((response) => {
+			.then(response => {
 				console.log(response.data);
 				dispatch(authSuccess(response.data.idToken, response.data.localId));
 			})
-			.catch((error) => {
-				console.log(error);
-				dispatch(authFail(error));
+			.catch(error => {
+				dispatch(authFail(error.response.data.error));
 			});
 	};
 };
