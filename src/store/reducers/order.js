@@ -4,7 +4,8 @@ import { updateObject } from '../utility';
 const initialState = {
 	orders: [],
 	loading: false,
-	purchased: false
+	purchased: false,
+	error: null
 };
 
 const reducer = (state = initialState, action) => {
