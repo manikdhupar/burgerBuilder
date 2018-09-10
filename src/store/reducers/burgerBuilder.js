@@ -4,7 +4,8 @@ import { updateObject } from '../utility';
 const initialState = {
 	ingredients: null,
 	totalPrice: 0,
-	error: false
+	error: false,
+	building: false
 };
 
 const INGREDIENT_PRICES = {
@@ -22,7 +23,8 @@ const reducer = (state = initialState, action) => {
 					...state.ingredients,
 					[action.ingredientName]: state.ingredients[action.ingredientName] + 1
 				},
-				totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+				totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+				building: true
 			});
 
 		case actionTypes.REMOVE_INGREDIENT:
@@ -31,14 +33,16 @@ const reducer = (state = initialState, action) => {
 					...state.ingredients,
 					[action.ingredientName]: state.ingredients[action.ingredientName] - 1
 				},
-				totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+				totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+				building: true
 			});
 
 		case actionTypes.SET_INGREDIENTS:
 			return updateObject(state, {
 				ingredients: action.ingredients,
 				error: false,
-				totalPrice: 0
+				totalPrice: 0,
+				building: false
 			});
 
 		case actionTypes.FETCH_INGREDIENTS_FAILED:
