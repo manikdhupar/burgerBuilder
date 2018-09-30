@@ -99,8 +99,6 @@ export const authCheckState = () => {
 				dispatch(
 					authLogout((expirationTime.getTime() - new Date().getTime()) / 1000)
 				);
-				console.log(expirationTime.getTime(), new Date().getTime());
-				console.log((expirationTime.getTime() - new Date().getTime()) / 1000);
 			} else {
 				dispatch(logout());
 			}
